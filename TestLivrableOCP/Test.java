@@ -1,26 +1,22 @@
-import java.util.Arrays;
-import java.util.function.Function;
+import java.time.LocalDateTime;
+import java.util.Random;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 /**
  * @author samirromdhani
  */
 public class Test {
 
 	public static void main(String[] args) {
-		System.out.println("############  The Function Interface ################");
-		Arrays.stream("4, -9, 16".split(", "))
-		.map(Integer::parseInt)
-		.map(i -> (i < 0) ? -i : i)
+		System.out.println("############  The Supplier Interfacee ################");
+		//Use Case : use a method that does not take any input but returns some output
+		Random random = new Random();
+		Stream.generate(random::nextBoolean)  //static <T> Stream<T> generate(Supplier<T> s)
+		.limit(2)
 		.forEach(System.out::println);
 		
 		System.out.println("############   Demo  ################");
-		Function<String, Integer> strToInt = str -> Integer.parseInt(str);
-		Function<Integer, Integer> posNumber = num -> num < 0 ? -num : num;
-		System.out.println(strToInt.apply("15"));
-		
-		System.out.println("############  The Function Interface ################");
-		Arrays.stream("4, -9, 16".split(", "))
-		.map(i -> strToInt.apply(i))
-		.map(i -> posNumber.apply(i))
-		.forEach(System.out::println);
+		Supplier<String> currentDateTime = () -> LocalDateTime.now().toString();
+		System.out.println(currentDateTime.get());
 	}
 }
