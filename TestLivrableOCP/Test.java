@@ -1,22 +1,26 @@
-import java.util.function.Consumer;
-import java.util.stream.Stream;
-
+import java.util.Arrays;
+import java.util.function.Function;
 /**
  * @author samirromdhani
  */
 public class Test {
 
 	public static void main(String[] args) {
-		System.out.println("############  The Consumer Interface ################");
-		Stream.of("hello", "world")
-		.forEach(/* Consumer go here */System.out::println); // void forEach(Consumer<? super T> action);
+		System.out.println("############  The Function Interface ################");
+		Arrays.stream("4, -9, 16".split(", "))
+		.map(Integer::parseInt)
+		.map(i -> (i < 0) ? -i : i)
+		.forEach(System.out::println);
 		
 		System.out.println("############   Demo  ################");
-		Consumer<String> printUpperCase = str -> System.out.println(str.toUpperCase());
-		printUpperCase.accept("hello");
+		Function<String, Integer> strToInt = str -> Integer.parseInt(str);
+		Function<Integer, Integer> posNumber = num -> num < 0 ? -num : num;
+		System.out.println(strToInt.apply("15"));
 		
-		System.out.println("############  The Consumer Interface ################");
-		Stream.of("hello", "world")
-		.forEach(str -> printUpperCase.accept(str));
+		System.out.println("############  The Function Interface ################");
+		Arrays.stream("4, -9, 16".split(", "))
+		.map(i -> strToInt.apply(i))
+		.map(i -> posNumber.apply(i))
+		.forEach(System.out::println);
 	}
 }
